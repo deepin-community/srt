@@ -1,0 +1,63 @@
+#!/usr/bin/make -f
+export DH_VERBOSE = 1
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
+export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
+
+# Standardized flags from /usr/share/perl5/Debian/Debhelper/Buildsystem/cmake.pm.
+CMAKE_OPTS := -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=None -DCMAKE_INSTALL_SYSCONFDIR=/etc -DCMAKE_INSTALL_LOCALSTATEDIR=/var -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
+# Enable some features that are disabled by default
+EXTRA_OPTS := -DENABLE_UNITTESTS=ON # requires libgtest-dev
+# -DENABLE_EXAMPLES=ON -> Example Apps -> will be installed in source form and handled via autopkgtests
+# -DENABLE_TESTING=ON  -> DEVEL APPS (testing), some with rather generic names -> no need to install
+# Restrict upstream unit testing to architectures upstream focuses on (and some where the tests succeed nonetheless)
+test_archs = amd64 i386 arm64 armel armhf mips64el mipsel riscv64 x32
+
+include /usr/share/dpkg/default.mk  # provides DEB_VERSION
+
+%:
+	dh $@ --buildsystem=cmake+makefile $(DH_ADDONS)
+build binary %-indep: DH_ADDONS=--with=sphinxdoc
+
+override_dh_auto_configure-arch:
+	dh_auto_configure --builddirectory=build-openssl -- $(CMAKE_OPTS) $(EXTRA_OPTS) -DUSE_ENCLIB=openssl
+	dh_auto_configure --builddirectory=build-gnutls -- $(CMAKE_OPTS) $(EXTRA_OPTS) -DUSE_ENCLIB=gnutls -DTARGET_srt=srt-gnutls
+
+# not needed for arch-indep only builds
+override_dh_auto_configure-indep:
+
+override_dh_auto_build-arch:
+	dh_auto_build --builddirectory=build-openssl
+	dh_auto_build --builddirectory=build-gnutls
+
+override_dh_auto_build-indep:
+	http_proxy='http://127.0.0.1:9/' sphinx-build -N -c debian -d debian/doctrees -bhtml docs debian/html
+
+override_dh_auto_install-arch:
+	dh_auto_install --builddirectory=build-openssl
+	dh_auto_install --builddirectory=build-gnutls # this overwrites the *.pc files so we later need to install them from the respective builddirectory
+
+# unbreak arch-indep only builds
+override_dh_auto_install-indep:
+
+override_dh_installman-arch:
+	help2man --help-option=-help --no-discard-stderr --no-info --version-string="$(DEB_VERSION)" \
+	--name "SRT sample application to transmit files" \
+	-o ./debian/srt-file-transmit.1 ./build-gnutls/srt-file-transmit
+	help2man --help-option=-help --no-discard-stderr --no-info --version-string="$(DEB_VERSION)" \
+	--name "SRT sample application to transmit live streaming" \
+	-o ./debian/srt-live-transmit.1 ./build-gnutls/srt-live-transmit
+	dh_installman
+
+# unbreak arch-indep only builds
+override_dh_installman-indep:
+
+override_dh_auto_test-arch:
+ifneq (,$(filter $(DEB_HOST_ARCH), $(test_archs)))
+	# must be executed consecutively lest they interfer with each other!
+	dh_auto_test --no-parallel --builddirectory=build-openssl
+	dh_auto_test --no-parallel --builddirectory=build-gnutls
+endif
+
+# unbreak arch-indep only builds
+override_dh_auto_test-indep:

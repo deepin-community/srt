@@ -1,0 +1,51 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.TH SRT-TUNNEL 1 "2022-02-28"
+.\" Please adjust this date whenever revising the manpage.
+.SH NAME
+srt-tunnel \- tunnel an SRT connection between two URIs
+.SH SYNOPSIS
+.B srt-tunnel
+.RB <
+.IR listen-uri
+.RB >
+.RB <
+.IR call-uri
+.RB >
+.SH DESCRIPTION
+SRT Tunnel is a typical tunnelling application, that is, it simply passes the
+transmission from a given endpoint to another endpoint in both directions.
+.P
+Tunnels can be also “chained”, that is, there can be more than one tunnel on
+the way between the real peers.
+.P
+This tunnel application can use both TCP and SRT as endpoint type and the
+typically predicted use case is to hand over the transmission for SRT for a
+longer distance, leaving TCP close to the caller and listener locations.
+.P
+The srt-tunnel command line accepts two argument, beside the options:
+.P
+Listener: the URI at which this tunnel should await connections
+.P
+Caller: where this tunnel should connect when its Listener connected
+.SH OPTIONS
+.TP
+.B \-ll, \-loglevel
+logging level, default:error
+.TP
+.B \-lf, \-logfa
+logging Functional Area enabled
+.TP
+.B \-c, \-chunk
+piece of data amount read at once, default=4096 bytes
+.TP
+.B \-v, \-verbose
+display transmission details
+.TP
+.B \-s, \-skipflush
+exit without waiting for data to complete
+.SH SEE ALSO
+.BR srt-live-transmit (1)
+.SH AUTHOR
+.PP
+This manual page was written by Florian Ernst <florian@debian.org>,
+for the Debian project (and may be used by others).

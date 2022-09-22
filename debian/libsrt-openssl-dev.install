@@ -1,0 +1,5 @@
+usr/include/*
+usr/lib/*/libsrt.a
+usr/lib/*/libsrt.so
+# dh_install default to build dir first before falling back to debian/tmp, so
+build-openssl/*.pc usr/lib/${DEB_HOST_MULTIARCH}/pkgconfig

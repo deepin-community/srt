@@ -1,0 +1,2 @@
+# we need to install them from the respective builddirectory instead
+usr/lib/*/pkgconfig/*.pc

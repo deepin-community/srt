@@ -1,0 +1,26 @@
+From: Federico Ceratto <federico@debian.org>
+Subject: support multiarch and disable RPATH
+Forwarded: not-needed
+
+Index: libsrt/CMakeLists.txt
+===================================================================
+--- libsrt.orig/CMakeLists.txt
++++ libsrt/CMakeLists.txt
+@@ -10,6 +10,8 @@
+ cmake_minimum_required (VERSION 2.8.12 FATAL_ERROR)
+ set (SRT_VERSION 1.4.4)
+ 
++include(GNUInstallDirs)
++
+ set (CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/scripts")
+ include(haiUtil) # needed for set_version_variables
+ # CMake version 3.0 introduced the VERSION option of the project() command
+@@ -1107,6 +1109,8 @@ macro(srt_make_application name)
+ 		set_target_properties(${name} PROPERTIES ${FORCE_RPATH})
+ 	endif()
+ 
++set_target_properties(${name} PROPERTIES SKIP_BUILD_RPATH TRUE)
++
+ 	target_link_libraries(${name} ${srt_link_library})
+ 	if (USE_GNUSTL)
+ 		target_link_libraries(${name} PRIVATE ${GNUSTL_LIBRARIES} ${GNUSTL_LDFLAGS})

@@ -1,0 +1,10 @@
+Document: libsrt-doc
+Title: Documentation for SRT (Secure Reliable Transport) library
+Author: Haivision, Inc
+Abstract: This manual describes the Secure Reliable Transport
+ protocol and application development using libsrt.
+Section: Programming/C++
+
+Format: HTML
+Index: /usr/share/doc/libsrt-doc/html/API/API.html
+Files: /usr/share/doc/libsrt-doc/html/*/*.html

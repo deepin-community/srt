@@ -1,0 +1,180 @@
+srt (1.4.4-4) UNRELEASED; urgency=medium
+
+  * update
+
+ -- Florian Ernst <florian@debian.org>  Thu, 16 Jun 2022 14:32:53 +0800
+
+srt (1.4.4-4) unstable; urgency=medium
+
+  * [00e65b3] restrict upstream unit testing to certain architectures
+
+ -- Florian Ernst <florian@debian.org>  Sun, 13 Mar 2022 11:28:01 +0100
+
+srt (1.4.4-3) unstable; urgency=medium
+
+  * [759b832] enable upstream unit tests again, using libgtest-dev
+  * [a0096b4] debian/tests/: add simple autopkgtest tests
+  * [da46ba2] debian/rules: complete separation between -arch and -indep calls
+  * [413e1de] debian/rules: drop trailing whitespace
+
+ -- Florian Ernst <florian@debian.org>  Sat, 12 Mar 2022 15:30:35 +0100
+
+srt (1.4.4-2) unstable; urgency=medium
+
+  * [75ad4d7] don't require B-D-I python3-sphinx during clean
+  * [604e728] debian/control: mark libsrt-doc 'Multi-Arch: foreign'
+
+ -- Florian Ernst <florian@debian.org>  Thu, 03 Mar 2022 22:07:57 +0100
+
+srt (1.4.4-1) unstable; urgency=medium
+
+  * [2813e0b] New upstream version 1.4.3
+  * [583b131] New upstream version 1.4.4 (Closes: LP#1957746)
+  * [e005fb4] debian/patches/: drop 1741.patch and gcc-11.patch, both now
+    upstream; refresh remaining patches
+  * [836713c] debian/copyright: completely cover the new upstream release
+  * [1ed3278] debian/{libsrt-doc.doc-base,conf.py}: follow upstream's doc
+    reorg
+  * [6215261] debian/control: provide individual Description per package
+  * [6aee7c9] debian/libsrt-doc.examples: install upstream examples as well
+  * [a412bcf] debian/patches/typo.patch: fix a typo present in various
+    binaries
+  * [2484989] debian/patches/: forward remaining patches upstream where needed
+  * [f1b3b04] debian/rules: build with sphinxdoc, adding libjs-sphinxdoc to
+    docs package
+  * [0c3db08] add lintian-overrides for package-name-doesnt-match-sonames as
+    the package name also reflects the library used to enable encryption
+  * [87e7896] add lintian-overrides for no-symbols-control-file.
+    C++ library with over 1000 exported symbols, so let's stick with shlibs
+  * [fd1c8ab] debian/control: add 'Suggests: ffmpeg' to 'Package: srt-tools'
+    due to usr/bin/srt-ffplay
+  * [31d7d79] pkgconfig files are installed separately, so exclude them from
+    *.install
+  * [36e1ffe] debian/{clean,rules,srt-tools.install}: drop stransmit extra
+    binary; no need to copy (and not even symlink) a binary that nothing uses
+  * [2ca1fc8] debian/control: drop unused B-D chrpath and tclsh
+  * [9181f3b] provide remaining manpages (albeit minimal) and clean up
+    help2man calls
+  * [ca08c12] debian/control: Standards-Version: 4.6.0.1 (no further changes
+    required)
+  * [c93b8a3] debian/rules: cleanup, much relying on dh's defaults for the
+    right thing
+
+ -- Florian Ernst <florian@debian.org>  Wed, 02 Mar 2022 21:33:49 +0100
+
+srt (1.4.2-2) unstable; urgency=medium
+
+  * A bugfixes-first-more-invasive-changes-later release
+
+  [ Federico Ceratto ]
+  * [a7c6458] Remove myself as maintainer
+
+  [ Florian Ernst ]
+  * [47532c2] fix FTFBS with GCC-11 by adding '#include <limits>' to
+    srtcore/sync.h.  Thanks to Steve Langasek (Closes: #984352)
+  * [a62d7c3] libsrt-openssl-dev: install correct pkg-config file
+    (Closes: #1001529)
+  * [bf212f4] debian/control: new maintainer (Closes: #964904)
+
+ -- Florian Ernst <florian@debian.org>  Fri, 25 Feb 2022 18:01:07 +0100
+
+srt (1.4.2-1.4) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Fix FTBFS on kfreebsd
+
+ -- Laurent Bigonville <bigon@debian.org>  Tue, 27 Jul 2021 12:29:44 +0200
+
+srt (1.4.2-1.3) unstable; urgency=medium
+
+  * Fix arch-indep-only builds by not trying to install the libraries that
+    were not built.
+
+ -- Sebastian Dröge <slomo@debian.org>  Tue, 19 Jan 2021 16:15:04 +0200
+
+srt (1.4.2-1.2) unstable; urgency=medium
+
+  * Source-only upload without changes.
+
+ -- Sebastian Dröge <slomo@debian.org>  Tue, 19 Jan 2021 14:27:41 +0200
+
+srt (1.4.2-1.1) unstable; urgency=medium
+
+  [ Federico Ceratto ]
+  * Pass flags to cmake (Closes: #971811)
+    Thanks to Helmut Grohne <helmut@subdivi.de>
+
+  [ Sebastian Dröge ]
+  * Include upstream patch to make the major.minor version the soname. Between
+    minor releases there won't be any further ABI changes. (Closes: #971754)
+
+    As a result of this also rename the binary packages accordingly.
+
+    Patch taken from https://github.com/Haivision/srt/pull/1741
+
+ -- Sebastian Dröge <slomo@debian.org>  Sat, 16 Jan 2021 10:30:39 +0200
+
+srt (1.4.2-1) unstable; urgency=medium
+
+  * New upstream release (Closes: #963798)
+    Thanks to Vasyl Gello <vasek.gello@gmail.com>
+
+ -- Federico Ceratto <federico@debian.org>  Sat, 03 Oct 2020 11:40:07 +0100
+
+srt (1.4.1-5) unstable; urgency=medium
+
+  * Update Conflicts / Provides
+
+ -- Federico Ceratto <federico@debian.org>  Sun, 14 Jun 2020 10:47:47 +0100
+
+srt (1.4.1-4) unstable; urgency=medium
+
+  * Add Break + Replaces (Closes: #962624)
+    Thanks to Gianfranco Costamagna <locutusofborg@debian.org>
+
+ -- Federico Ceratto <federico@debian.org>  Sat, 13 Jun 2020 00:17:35 +0100
+
+srt (1.4.1-3) unstable; urgency=medium
+
+  [ Jonas Smedegaard ]
+  * fix multiarch paths (Closes: #962619)
+
+ -- Federico Ceratto <federico@debian.org>  Wed, 10 Jun 2020 20:33:17 +0100
+
+srt (1.4.1-2) unstable; urgency=medium
+
+  * Split build against OpenSSL and GnuTLS (Closes: #933180)
+
+ -- Federico Ceratto <federico@debian.org>  Tue, 19 May 2020 23:54:34 +0100
+
+srt (1.4.1-1) unstable; urgency=medium
+
+  * New upstream release
+  * Add libssl-dev dep (Closes: #933178)
+
+ -- Federico Ceratto <federico@debian.org>  Sat, 09 May 2020 23:39:04 +0100
+
+srt (1.4.0-1) unstable; urgency=medium
+
+  * New upstream release (Closes: #939040)
+
+ -- Federico Ceratto <federico@debian.org>  Tue, 17 Sep 2019 10:38:25 +0100
+
+srt (1.3.2-1) unstable; urgency=medium
+
+  [ Ondřej Nový ]
+  * Use 'python3 -m sphinx' instead of sphinx-build for building docs
+  * d/control: Fix wrong Vcs-*
+
+  [ Federico Ceratto ]
+  * New upstream release
+  * Split override_dh_installman (Closes: #914364)
+
+
+ -- Federico Ceratto <federico@debian.org>  Fri, 17 May 2019 21:28:13 +0100
+
+srt (1.3.1-1) unstable; urgency=medium
+
+  * Initial release (Closes: #908333)
+
+ -- Federico Ceratto <federico@debian.org>  Sun, 16 Sep 2018 17:27:04 +0100

@@ -1,0 +1,4 @@
+debian/srt-file-transmit.1
+debian/srt-live-transmit.1
+debian/srt-ffplay.1
+debian/srt-tunnel.1

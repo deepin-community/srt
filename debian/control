@@ -1,0 +1,102 @@
+Source: srt
+Priority: optional
+Maintainer: Florian Ernst <florian@debian.org>
+Build-Depends: debhelper-compat (= 13),
+ cmake,
+ help2man,
+ libgnutls28-dev,
+ libgtest-dev,
+ libssl-dev,
+ pkg-config,
+Build-Depends-Indep: python3-sphinx
+Standards-Version: 4.6.0.1
+Section: libs
+Homepage: https://github.com/Haivision/srt
+Vcs-Browser: https://salsa.debian.org/debian/libsrt
+Vcs-Git: https://salsa.debian.org/debian/libsrt.git
+Rules-Requires-Root: no
+
+Package: libsrt1.4-openssl
+Architecture: any
+Breaks: libsrt1 (<< 1.4.1-3), libsrt1-openssl
+Replaces: libsrt1 (<< 1.4.1-3), libsrt1-openssl
+Multi-Arch: same
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Secure Reliable Transport UDP streaming library (OpenSSL flavour)
+ SRT is a latency-aware UDP transport mechanism optimized for video streams.
+ It detects and compensates for jitter and bandwidth fluctuations due to
+ network congestion. It mitigates packet loss and supports AES encryption.
+ .
+ SSL support is provided by OpenSSL.
+
+Package: libsrt1.4-gnutls
+Architecture: any
+Breaks: libsrt1-gnutls
+Replaces: libsrt1-gnutls
+Multi-Arch: same
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Secure Reliable Transport UDP streaming library (GnuTLS flavour)
+ SRT is a latency-aware UDP transport mechanism optimized for video streams.
+ It detects and compensates for jitter and bandwidth fluctuations due to
+ network congestion. It mitigates packet loss and supports AES encryption.
+ .
+ SSL support is provided by GnuTLS.
+
+Package: libsrt-openssl-dev
+Section: libdevel
+Breaks: libsrt-dev (<< 1.4.1-2)
+Replaces: libsrt-dev (<< 1.4.1-2)
+Architecture: any
+Multi-Arch: same
+Conflicts: libsrt-gnutls-dev, libsrt-dev
+Depends: libsrt1.4-openssl (= ${binary:Version}), ${misc:Depends}
+Suggests: libsrt-doc (= ${binary:Version}), libssl-dev (>= 1.1)
+Description: Secure Reliable Transport UDP streaming library (OpenSSL flavour development)
+ SRT is a latency-aware UDP transport mechanism optimized for video streams.
+ It detects and compensates for jitter and bandwidth fluctuations due to
+ network congestion. It mitigates packet loss and supports AES encryption.
+ .
+ This package contains development files for libsrt1.4
+ SSL support is provided by OpenSSL.
+
+Package: libsrt-gnutls-dev
+Section: libdevel
+Breaks: libsrt-dev (<< 1.4.1-2)
+Replaces: libsrt-dev (<< 1.4.1-2)
+Architecture: any
+Multi-Arch: same
+Conflicts: libsrt-openssl-dev, libsrt-dev
+Depends: libsrt1.4-gnutls (= ${binary:Version}), ${misc:Depends}
+Suggests: libsrt-doc (= ${binary:Version}), libgnutls28-dev
+Description: Secure Reliable Transport UDP streaming library (GnuTLS flavour development)
+ SRT is a latency-aware UDP transport mechanism optimized for video streams.
+ It detects and compensates for jitter and bandwidth fluctuations due to
+ network congestion. It mitigates packet loss and supports AES encryption.
+ .
+ This package contains development files for libsrt1.4-gnutls
+ SSL support is provided by GnuTLS.
+
+Package: libsrt-doc
+Section: doc
+Architecture: all
+Multi-Arch: foreign
+Depends: ${misc:Depends}, ${sphinxdoc:Depends}
+Description: Secure Reliable Transport UDP streaming library (documentation)
+ SRT is a latency-aware UDP transport mechanism optimized for video streams.
+ It detects and compensates for jitter and bandwidth fluctuations due to
+ network congestion. It mitigates packet loss and supports AES encryption.
+ .
+ This package contains documentation files for libsrt1.4
+
+Package: srt-tools
+Architecture: any
+Section: utils
+Multi-Arch: foreign
+Depends: libsrt1.4-gnutls (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Suggests: ffmpeg
+Description: Secure Reliable Transport UDP streaming library (CLI tools)
+ SRT is a latency-aware UDP transport mechanism optimized for video streams.
+ It detects and compensates for jitter and bandwidth fluctuations due to
+ network congestion. It mitigates packet loss and supports AES encryption.
+ .
+ This package contains CLI tools.

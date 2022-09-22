@@ -1,0 +1,31 @@
+#!/bin/bash
+
+set -e
+set -x
+
+if [ -n "${DEB_HOST_GNU_TYPE:-}" ]; then
+    CROSS_COMPILE=${DEB_HOST_GNU_TYPE}-
+else
+    CROSS_COMPILE=
+fi
+
+IP='127.0.0.1'
+PORT='54321'
+WORKDIR=$(mktemp -d)
+trap "rm -rf $WORKDIR" 0 INT QUIT ABRT PIPE TERM
+
+PKGCONFIG="$(pkg-config --cflags --libs srt)"
+for i in examples/*.c; do
+    if echo "$i" | grep -q -- '-bonding\.c$'; then continue; fi # bonding is still experimental
+    ${CROSS_COMPILE}gcc -Wall -Werror -o "$WORKDIR/$(basename $i .c)" "$i" $PKGCONFIG
+done
+
+for i in test-c-client example-client-nonblock; do
+    $WORKDIR/test-c-server $IP $PORT > $WORKDIR/test-c-server.logs &
+    sleep 2
+    $WORKDIR/$i $IP $PORT
+    sleep 2
+    cat $WORKDIR/test-c-server.logs
+    grep -q '^srt cleanup$' $WORKDIR/test-c-server.logs && echo 'log seems complete'
+done
+

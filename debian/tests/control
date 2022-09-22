@@ -1,0 +1,32 @@
+Test-Command: debian/tests/build gnutls
+Depends:
+ build-essential,
+ pkg-config,
+ libsrt-gnutls-dev,
+ libgnutls28-dev
+Restrictions: allow-stderr
+
+Test-Command: debian/tests/build-cpp gnutls
+Depends:
+ build-essential,
+ pkg-config,
+ libsrt-gnutls-dev,
+ libgnutls28-dev
+Restrictions: allow-stderr, flaky
+
+Test-Command: debian/tests/build openssl
+Depends:
+ build-essential,
+ pkg-config,
+ libsrt-openssl-dev,
+ libssl-dev (>= 1.1)
+Restrictions: allow-stderr
+
+Test-Command: debian/tests/build-cpp openssl
+Depends:
+ build-essential,
+ pkg-config,
+ libsrt-openssl-dev,
+ libssl-dev (>= 1.1)
+Restrictions: allow-stderr, flaky
+

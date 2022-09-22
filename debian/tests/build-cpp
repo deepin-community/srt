@@ -1,0 +1,32 @@
+#!/bin/bash
+
+set -e
+set -x
+
+if [ -n "${DEB_HOST_GNU_TYPE:-}" ]; then
+    CROSS_COMPILE=${DEB_HOST_GNU_TYPE}-
+else
+    CROSS_COMPILE=
+fi
+
+IP='127.0.0.1'
+PORT='54321'
+WORKDIR=$(mktemp -d)
+trap "rm -rf $WORKDIR" 0 INT QUIT ABRT PIPE TERM
+
+PKGCONFIG="$(pkg-config --cflags --libs srt)"
+for i in examples/*.cpp; do
+    ${CROSS_COMPILE}g++ -pedantic -Wall -Werror -o "$WORKDIR/$(basename $i .cpp)" "$i" $PKGCONFIG -pthread # -pthread only used by sendfile.cpp
+done
+
+# sendfile often hangs / dies with an exception, so it does not work reliably enough for autopkgtest
+$WORKDIR/sendfile $PORT > $WORKDIR/sendfile.logs &
+PID=$!
+sleep 2
+$WORKDIR/recvfile $IP $PORT /etc/hosts $WORKDIR/hosts
+sleep 2
+kill -9 $PID || true # ensure sendfile really terminates
+sleep 2
+cat $WORKDIR/sendfile.logs
+diff -u /etc/hosts $WORKDIR/hosts && echo 'no differences found'
+

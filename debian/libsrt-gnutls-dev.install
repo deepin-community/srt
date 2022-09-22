@@ -1,0 +1,5 @@
+usr/include/*
+usr/lib/*/libsrt-gnutls.a
+usr/lib/*/libsrt-gnutls.so
+# dh_install default to build dir first before falling back to debian/tmp, so
+build-gnutls/*.pc usr/lib/${DEB_HOST_MULTIARCH}/pkgconfig

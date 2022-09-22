@@ -1,0 +1,4 @@
+debian/tmp/usr/bin/srt-ffplay         /usr/bin/
+debian/tmp/usr/bin/srt-file-transmit  /usr/bin/
+debian/tmp/usr/bin/srt-live-transmit  /usr/bin/
+debian/tmp/usr/bin/srt-tunnel         /usr/bin/
