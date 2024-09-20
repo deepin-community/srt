@@ -1,8 +1,12 @@
-srt (1.4.4-4) UNRELEASED; urgency=medium
+srt (1.4.4-4deepin0) unstable; urgency=medium
 
+  [ Florian Ernst ]
   * update
 
- -- Florian Ernst <florian@debian.org>  Thu, 16 Jun 2022 14:32:53 +0800
+  [ Tianyu Chen ]
+  * No source change upload against GCC 12.
+
+ -- Tianyu Chen <sweetyfish@deepin.org>  Fri, 20 Sep 2024 12:19:19 +0800
 
 srt (1.4.4-4) unstable; urgency=medium
 
