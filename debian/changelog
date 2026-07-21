@@ -1,3 +1,9 @@
+srt (1.4.4-4deepin2) unstable; urgency=medium
+
+  * fix(cve): CVE-2026-55869
+
+ -- deepin-ci-robot <packages@deepin.org>  Tue, 21 Jul 2026 19:22:26 +0800
+
 srt (1.4.4-4deepin1) unstable; urgency=medium
 
   * fix(cve): CVE-2026-55868
