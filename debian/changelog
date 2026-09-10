@@ -1,3 +1,9 @@
+srt (1.4.4-4deepin1) unstable; urgency=medium
+
+  * Rebuild with LTO enabled (dpkg vendor feature optimize/lto).
+
+ -- tunaichao <tunaichao@uniontech.com>  Thu, 10 Sep 2026 20:56:16 +0800
+
 srt (1.4.4-4deepin0) unstable; urgency=medium
 
   [ Florian Ernst ]
